@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pengaturan | HydroLight</title>
+    <link rel="stylesheet" href="css/pengaturan.css" />
+  </head>
+  <body>
+    <div class="app">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="logo">🌱</div>
+          <div><strong>HydroLight</strong><small>Smart grow system</small></div>
+        </div>
+        <div>
+          <div class="nav-label">MENU UTAMA</div>
+          <nav>
+            <a class="nav-btn" href="index.html"
+              ><span class="ico">▦</span>Overview</a
+            >
+            <a class="nav-btn" href="monitoring.html"
+              ><span class="ico">◷</span>Monitoring cahaya</a
+            >
+            <a class="nav-btn" href="riwayat-dli.html"
+              ><span class="ico">▥</span>Riwayat DLI</a
+            >
+            <a class="nav-btn active" href="pengaturan.html"
+              ><span class="ico">⚙</span>Pengaturan</a
+            >
+          </nav>
+        </div>
+        <div class="sidebar-bottom">
+          <div class="device-card">
+            <div class="device-head">
+              <span>Perangkat ESP32</span
+              ><span style="font-size: 10px; color: #9fe0ae">● Online</span>
+            </div>
+            <p><span class="dot"></span>Terhubung melalui Wi-Fi</p>
+            <p>Node: Rak Selada 1 · BH1750</p>
+          </div>
+        </div>
+      </aside>
+
+      <main>
+        <header class="topbar">
+          <div>
+            <div class="eyebrow">SMART HYDROPONIC LIGHTING</div>
+            <h1>Pengaturan</h1>
+            <div class="sub">Pantau kebutuhan cahaya tanaman Anda.</div>
+          </div>
+          <div class="top-actions">
+            <div class="date-pill">
+              ◷ &nbsp;<span class="clock">Memuat waktu…</span>
+            </div>
+            <button class="icon-btn refresh-btn" title="Perbarui tampilan">
+              ↻
+            </button>
+            <div class="profile">
+              <div class="avatar">HL</div>
+              <div>
+                <strong style="font-size: 12px">Pengguna</strong
+                ><small>Administrator</small>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <section class="page active" id="settings">
+          <div class="settings-grid">
+            <div class="panel">
+              <h3>Profil tanaman</h3>
+              <div class="panel-desc" style="margin-bottom: 17px">
+                Tentukan tanaman dan target cahaya harian
+              </div>
+              <div class="field">
+                <label>Jenis tanaman</label
+                ><select id="plant">
+                  <option value="Selada">Selada</option>
+                  <option value="Sawi">Sawi</option>
+                  <option value="Sayuran daun lainnya">
+                    Sayuran daun lainnya
+                  </option>
+                  <option value="Kustom">Kustom</option>
+                </select>
+              </div>
+              <div class="field" style="margin-top: 14px">
+                <label>Target DLI harian (mol m⁻² hari⁻¹)</label
+                ><input
+                  type="number"
+                  id="targetInput"
+                  min="1"
+                  max="40"
+                  step=".1"
+                  value="12"
+                />
+              </div>
+              <div class="form-actions">
+                <button class="btn" id="saveTarget">Simpan target</button>
+              </div>
+              <p class="muted" style="font-size: 10px; margin-top: 12px">
+                Nilai 11,5 mol m⁻² hari⁻¹ digunakan sebagai salah satu referensi
+                kebutuhan selada dalam proposal. Target dapat disesuaikan oleh
+                pengguna.
+              </p>
+            </div>
+            <div class="panel">
+              <h3>Informasi perangkat</h3>
+              <div class="panel-desc" style="margin-bottom: 17px">
+                Komponen pada prototipe yang diusulkan
+              </div>
+              <table class="table">
+                <tr>
+                  <td class="muted">Mikrokontroler</td>
+                  <td>ESP32 DevKit</td>
+                </tr>
+                <tr>
+                  <td class="muted">Sensor cahaya</td>
+                  <td>BH1750 / GY-302</td>
+                </tr>
+                <tr>
+                  <td class="muted">Aktuator</td>
+                  <td>LED grow light dimmable</td>
+                </tr>
+                <tr>
+                  <td class="muted">Driver</td>
+                  <td>MOSFET / PWM dimmer</td>
+                </tr>
+                <tr>
+                  <td class="muted">Komunikasi</td>
+                  <td>Wi-Fi / HTTP</td>
+                </tr>
+                <tr>
+                  <td class="muted">Mode lampu</td>
+                  <td>Otomatis berdasarkan sensor cahaya</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <div class="panel" style="margin-top: 16px">
+            <h3>Catatan implementasi</h3>
+            <p class="muted" style="font-size: 12px; margin-bottom: 0">
+              Dashboard ini merupakan antarmuka front-end demonstrasi. Integrasi
+              perangkat nyata memerlukan endpoint komunikasi dari ESP32,
+              penyimpanan data pengukuran, serta faktor konversi lux ke PPFD
+              hasil kalibrasi PAR meter. Data simulasi tidak boleh dianggap
+              sebagai hasil pengujian prototipe.
+            </p>
+          </div>
+        </section>
+      </main>
+    </div>
+    <div class="toast" id="toast">Pengaturan berhasil disimpan.</div>
+    <script src="js/app.js"></script>
+  </body>
+</html>

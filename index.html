@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Overview | HydroLight</title>
+    <link rel="stylesheet" href="css/overview.css" />
+  </head>
+  <body>
+    <div class="app">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="logo">🌱</div>
+          <div><strong>HydroLight</strong><small>Smart grow system</small></div>
+        </div>
+        <div>
+          <div class="nav-label">MENU UTAMA</div>
+          <nav>
+            <a class="nav-btn active" href="index.html"
+              ><span class="ico">▦</span>Overview</a
+            >
+            <a class="nav-btn" href="monitoring.html"
+              ><span class="ico">◷</span>Monitoring cahaya</a
+            >
+            <a class="nav-btn" href="riwayat-dli.html"
+              ><span class="ico">▥</span>Riwayat DLI</a
+            >
+            <a class="nav-btn" href="pengaturan.html"
+              ><span class="ico">⚙</span>Pengaturan</a
+            >
+          </nav>
+        </div>
+        <div class="sidebar-bottom">
+          <div class="device-card">
+            <div class="device-head">
+              <span>Perangkat ESP32</span
+              ><span style="font-size: 10px; color: #9fe0ae">● Online</span>
+            </div>
+            <p><span class="dot"></span>Terhubung melalui Wi-Fi</p>
+            <p>Node: Rak Selada 1 · BH1750</p>
+          </div>
+        </div>
+      </aside>
+
+      <main>
+        <header class="topbar">
+          <div>
+            <div class="eyebrow">SMART HYDROPONIC LIGHTING</div>
+            <h1>Overview</h1>
+            <div class="sub">Pantau kebutuhan cahaya tanaman Anda.</div>
+          </div>
+          <div class="top-actions">
+            <div class="date-pill">
+              ◷ &nbsp;<span class="clock">Memuat waktu…</span>
+            </div>
+            <button class="icon-btn refresh-btn" title="Perbarui tampilan">
+              ↻
+            </button>
+            <div class="profile">
+              <div class="avatar">HL</div>
+              <div>
+                <strong style="font-size: 12px">Pengguna</strong
+                ><small>Administrator</small>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <section class="page active" id="overview">
+          <div class="hero">
+            <div>
+              <div class="hero-tag">● SISTEM AKTIF · MODE OTOMATIS</div>
+              <h2>Pencahayaan tanaman terpantau 🌿</h2>
+              <p>
+                Lampu LED menyala otomatis ketika sensor BH1750 mendeteksi
+                cahaya yang kurang.
+              </p>
+            </div>
+            <div class="hero-icon">☀️</div>
+          </div>
+          <div class="metrics">
+            <div class="metric">
+              <div class="metric-top">
+                Intensitas cahaya <span class="metric-icon">☀</span>
+              </div>
+              <div class="metric-value" id="luxVal">9.120</div>
+              <div class="unit">lux · sensor BH1750</div>
+              <div class="trend">● Pembacaan sensor terkini</div>
+            </div>
+            <div class="metric">
+              <div class="metric-top">
+                PPFD estimasi <span class="metric-icon">✳</span>
+              </div>
+              <div class="metric-value" id="ppfdVal">169</div>
+              <div class="unit">µmol m⁻² s⁻¹</div>
+              <div class="trend">● Hasil konversi lux → PPFD</div>
+            </div>
+            <div class="metric">
+              <div class="metric-top">
+                DLI terkumpul <span class="metric-icon">◉</span>
+              </div>
+              <div class="metric-value" id="dliVal">6,2</div>
+              <div class="unit">mol m⁻² hari⁻¹</div>
+              <div class="trend" id="dliTrend">52% dari target harian</div>
+            </div>
+          </div>
+          <div class="grid-main">
+            <div class="panel">
+              <div class="panel-head">
+                <div>
+                  <h3>Intensitas cahaya sepanjang hari</h3>
+                  <div class="panel-desc">
+                    PPFD aktual dibandingkan dengan setpoint pengendali
+                  </div>
+                </div>
+                <div class="legend">
+                  <span><i class="swatch"></i>PPFD aktual</span
+                  ><span><i class="swatch dash"></i>Setpoint</span>
+                </div>
+              </div>
+              <div class="chart-wrap"><canvas id="ppfdChart"></canvas></div>
+              <div class="chart-foot">
+                <span>06.00</span><span>Waktu penyinaran</span
+                ><span>22.00</span>
+              </div>
+            </div>
+            <div class="panel progress-panel">
+              <div class="panel-head">
+                <div>
+                  <h3>Progress target DLI</h3>
+                  <div class="panel-desc">Akumulasi cahaya hari ini</div>
+                </div>
+                <span class="pill" id="progressBadge">Berjalan</span>
+              </div>
+              <div class="progress-big">
+                <strong id="progressPercent">52%</strong><span>tercapai</span>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill" id="progressFill"></div>
+              </div>
+              <div class="progress-meta">
+                <span id="dliCurrent">6,2 mol</span
+                ><span id="dliTarget">Target 12 mol</span>
+              </div>
+              <div class="info-note" id="progressNote">
+                Masih diperlukan sekitar 5,8 mol m⁻² untuk mencapai target
+                harian.
+              </div>
+              <div class="status-row">
+                <div class="status-icon">☀</div>
+                <div>
+                  <strong>Lampu LED otomatis</strong
+                  ><small>Menyala saat sensor mendeteksi cahaya kurang</small>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="grid-bottom">
+            <div class="panel">
+              <div class="panel-head">
+                <div>
+                  <h3>Riwayat DLI · 7 hari</h3>
+                  <div class="panel-desc">
+                    Perbandingan DLI harian dengan target tanaman
+                  </div>
+                </div>
+                <button
+                  class="btn secondary"
+                  onclick="window.location.href = 'riwayat-dli.html'"
+                >
+                  Lihat detail
+                </button>
+              </div>
+              <div class="week-chart"><canvas id="weekChart"></canvas></div>
+            </div>
+            <div class="panel">
+              <div class="panel-head">
+                <div>
+                  <h3>Status & notifikasi</h3>
+                  <div class="panel-desc">
+                    Informasi kondisi sistem saat ini
+                  </div>
+                </div>
+                <span class="pill">Normal</span>
+              </div>
+              <div class="alert-list">
+                <div class="alert">
+                  <div class="alert-symbol ok">✓</div>
+                  <div>
+                    <strong>Sensor BH1750 aktif</strong>
+                    <p>Pembacaan intensitas cahaya diterima.</p>
+                  </div>
+                </div>
+                <div class="alert">
+                  <div class="alert-symbol ok">↗</div>
+                  <div>
+                    <strong>ESP32 terhubung</strong>
+                    <p>Data monitoring dikirim ke dashboard.</p>
+                  </div>
+                </div>
+                <div class="alert">
+                  <div class="alert-symbol">◷</div>
+                  <div>
+                    <strong>Target DLI sedang dikejar</strong>
+                    <p id="alertText">
+                      Sistem menyesuaikan lampu pada sisa waktu penyinaran.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="footer-note">
+            * Tampilan menggunakan data simulasi untuk demonstrasi, bukan
+            pembacaan perangkat nyata.
+          </div>
+        </section>
+      </main>
+    </div>
+    <div class="toast" id="toast">Pengaturan berhasil disimpan.</div>
+    <script src="js/app.js"></script>
+  </body>
+</html>

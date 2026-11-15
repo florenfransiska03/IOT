@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Monitoring Cahaya | HydroLight</title>
+    <link rel="stylesheet" href="css/monitoring.css" />
+  </head>
+  <body>
+    <div class="app">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="logo">🌱</div>
+          <div><strong>HydroLight</strong><small>Smart grow system</small></div>
+        </div>
+        <div>
+          <div class="nav-label">MENU UTAMA</div>
+          <nav>
+            <a class="nav-btn" href="index.html"
+              ><span class="ico">▦</span>Overview</a
+            >
+            <a class="nav-btn active" href="monitoring.html"
+              ><span class="ico">◷</span>Monitoring cahaya</a
+            >
+            <a class="nav-btn" href="riwayat-dli.html"
+              ><span class="ico">▥</span>Riwayat DLI</a
+            >
+            <a class="nav-btn" href="pengaturan.html"
+              ><span class="ico">⚙</span>Pengaturan</a
+            >
+          </nav>
+        </div>
+        <div class="sidebar-bottom">
+          <div class="device-card">
+            <div class="device-head">
+              <span>Perangkat ESP32</span
+              ><span style="font-size: 10px; color: #9fe0ae">● Online</span>
+            </div>
+            <p><span class="dot"></span>Terhubung melalui Wi-Fi</p>
+            <p>Node: Rak Selada 1 · BH1750</p>
+          </div>
+        </div>
+      </aside>
+
+      <main>
+        <header class="topbar">
+          <div>
+            <div class="eyebrow">SMART HYDROPONIC LIGHTING</div>
+            <h1>Monitoring Cahaya</h1>
+            <div class="sub">Pantau kebutuhan cahaya tanaman Anda.</div>
+          </div>
+          <div class="top-actions">
+            <div class="date-pill">
+              ◷ &nbsp;<span class="clock">Memuat waktu…</span>
+            </div>
+            <button class="icon-btn refresh-btn" title="Perbarui tampilan">
+              ↻
+            </button>
+            <div class="profile">
+              <div class="avatar">HL</div>
+              <div>
+                <strong style="font-size: 12px">Pengguna</strong
+                ><small>Administrator</small>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <section class="page active" id="monitor">
+          <div class="metrics">
+            <div class="metric">
+              <div class="metric-top">
+                Lux <span class="metric-icon">☀</span>
+              </div>
+              <div class="metric-value">9.120</div>
+              <div class="unit">lux · BH1750</div>
+            </div>
+            <div class="metric">
+              <div class="metric-top">
+                PPFD estimasi <span class="metric-icon">✳</span>
+              </div>
+              <div class="metric-value">169</div>
+              <div class="unit">µmol m⁻² s⁻¹</div>
+            </div>
+            <div class="metric">
+              <div class="metric-top">
+                PPFD setpoint <span class="metric-icon">⌁</span>
+              </div>
+              <div class="metric-value">185</div>
+              <div class="unit">µmol m⁻² s⁻¹</div>
+            </div>
+            <div class="metric">
+              <div class="metric-top">
+                Interval baca <span class="metric-icon">◷</span>
+              </div>
+              <div class="metric-value">1 menit</div>
+              <div class="unit">Rata-rata 3 pembacaan</div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-head">
+              <div>
+                <h3>Grafik PPFD aktual & setpoint</h3>
+                <div class="panel-desc">
+                  Grafik contoh perubahan intensitas cahaya dari pukul 06.00
+                  sampai 22.00
+                </div>
+              </div>
+              <div class="legend">
+                <span><i class="swatch"></i>Aktual</span
+                ><span><i class="swatch dash"></i>Setpoint</span>
+              </div>
+            </div>
+            <div style="height: 340px"><canvas id="ppfdChart2"></canvas></div>
+          </div>
+          <div class="grid-bottom" style="margin-top: 16px">
+            <div class="panel">
+              <h3>Parameter pengukuran</h3>
+              <table class="table">
+                <tr>
+                  <td class="muted">Sensor</td>
+                  <td>BH1750 (GY-302)</td>
+                </tr>
+                <tr>
+                  <td class="muted">Lokasi sensor</td>
+                  <td>Tinggi tajuk tanaman</td>
+                </tr>
+                <tr>
+                  <td class="muted">Konversi</td>
+                  <td>Lux ke estimasi PPFD</td>
+                </tr>
+                <tr>
+                  <td class="muted">Akumulasi</td>
+                  <td>DLI harian</td>
+                </tr>
+              </table>
+            </div>
+            <div class="panel">
+              <h3>Catatan kalibrasi</h3>
+              <p class="muted" style="font-size: 12px">
+                Faktor konversi lux ke PPFD perlu dikalibrasi terhadap PAR meter
+                untuk lampu yang digunakan. Angka PPFD pada dashboard demo ini
+                merupakan data ilustrasi.
+              </p>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <div class="toast" id="toast">Pengaturan berhasil disimpan.</div>
+    <script src="js/app.js"></script>
+  </body>
+</html>
