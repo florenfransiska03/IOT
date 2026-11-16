@@ -4,220 +4,262 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Overview | HydroLight</title>
-    <link rel="stylesheet" href="css/overview.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/app.css" />
   </head>
   <body>
     <div class="app">
       <aside class="sidebar">
-        <div class="brand">
-          <div class="logo">🌱</div>
-          <div><strong>HydroLight</strong><small>Smart grow system</small></div>
-        </div>
-        <div>
-          <div class="nav-label">MENU UTAMA</div>
+        <a class="brand" href="index.html">
+          <span class="brand-text">
+            <strong>HydroLight</strong>
+            <small>Grow monitor</small>
+          </span>
+        </a>
+
+        <div class="nav-group">
+          <span class="nav-label">Menu</span>
           <nav>
-            <a class="nav-btn active" href="index.html"
-              ><span class="ico">▦</span>Overview</a
-            >
-            <a class="nav-btn" href="monitoring.html"
-              ><span class="ico">◷</span>Monitoring cahaya</a
-            >
-            <a class="nav-btn" href="riwayat-dli.html"
-              ><span class="ico">▥</span>Riwayat DLI</a
-            >
-            <a class="nav-btn" href="pengaturan.html"
-              ><span class="ico">⚙</span>Pengaturan</a
-            >
+            <a class="nav-btn active" href="index.html">
+              <span class="ico">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <rect x="3" y="3" width="7" height="7" rx="2" />
+                  <rect x="14" y="3" width="7" height="7" rx="2" />
+                  <rect x="3" y="14" width="7" height="7" rx="2" />
+                  <rect x="14" y="14" width="7" height="7" rx="2" />
+                </svg>
+              </span>
+              <span class="nav-text">Overview</span>
+            </a>
+            <a class="nav-btn" href="monitoring.html">
+              <span class="ico">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                  <circle cx="12" cy="12" r="4" />
+                  <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+                </svg>
+              </span>
+              <span class="nav-text">Monitoring</span>
+            </a>
+            <a class="nav-btn" href="riwayat-dli.html">
+              <span class="ico">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                  <path d="M4 20V10M10 20V4M16 20v-6M22 20H2" />
+                </svg>
+              </span>
+              <span class="nav-text">Riwayat DLI</span>
+            </a>
+            <a class="nav-btn" href="pengaturan.html">
+              <span class="ico">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                  <path d="M4 7h10M18 7h2M4 17h2M10 17h10" />
+                  <circle cx="16" cy="7" r="2.4" />
+                  <circle cx="8" cy="17" r="2.4" />
+                </svg>
+              </span>
+              <span class="nav-text">Pengaturan</span>
+            </a>
           </nav>
         </div>
-        <div class="sidebar-bottom">
-          <div class="device-card">
-            <div class="device-head">
-              <span>Perangkat ESP32</span
-              ><span style="font-size: 10px; color: #9fe0ae">● Online</span>
-            </div>
-            <p><span class="dot"></span>Terhubung melalui Wi-Fi</p>
-            <p>Node: Rak Selada 1 · BH1750</p>
+
+        <div class="device-card">
+          <div class="device-head">
+            <span>ESP32 · BH1750</span>
+            <span class="device-status" data-state="waiting">Menghubungkan</span>
           </div>
+          <div class="device-readouts">
+            <div><span>Lux</span><strong id="cardLuxVal">—</strong></div>
+            <div><span>Mol</span><strong id="cardMolVal">—</strong></div>
+          </div>
+          <p class="device-connection"><span class="dot"></span>Menunggu broker</p>
         </div>
       </aside>
 
       <main>
         <header class="topbar">
           <div>
-            <div class="eyebrow">SMART HYDROPONIC LIGHTING</div>
+            <span class="eyebrow">HydroLight</span>
             <h1>Overview</h1>
-            <div class="sub">Pantau kebutuhan cahaya tanaman Anda.</div>
+            <p class="sub">DLI, lux, dan mol hari ini.</p>
           </div>
           <div class="top-actions">
+            <div class="connection-pill" id="iotStatus" data-state="waiting">
+              <span class="connection-dot"></span>
+              <span class="connection-text">Menunggu IoT</span>
+            </div>
             <div class="date-pill">
-              ◷ &nbsp;<span class="clock">Memuat waktu…</span>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <circle cx="12" cy="12" r="9" />
+                <path d="M12 7v5l3 2" />
+              </svg>
+              <span class="clock">Memuat waktu…</span>
             </div>
             <button class="icon-btn refresh-btn" title="Perbarui tampilan">
-              ↻
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round">
+                <path d="M20 11a8 8 0 1 0-2.3 5.7" />
+                <path d="M20 4v7h-7" />
+              </svg>
             </button>
-            <div class="profile">
-              <div class="avatar">HL</div>
-              <div>
-                <strong style="font-size: 12px">Pengguna</strong
-                ><small>Administrator</small>
-              </div>
-            </div>
           </div>
         </header>
 
-        <section class="page active" id="overview">
-          <div class="hero">
-            <div>
-              <div class="hero-tag">● SISTEM AKTIF · MODE OTOMATIS</div>
-              <h2>Pencahayaan tanaman terpantau 🌿</h2>
-              <p>
-                Lampu LED menyala otomatis ketika sensor BH1750 mendeteksi
-                cahaya yang kurang.
-              </p>
-            </div>
-            <div class="hero-icon">☀️</div>
-          </div>
-          <div class="metrics">
-            <div class="metric">
+        <section class="page">
+          <div class="metrics-grid">
+            <article class="metric metric-dli">
               <div class="metric-top">
-                Intensitas cahaya <span class="metric-icon">☀</span>
+                <span>DLI hari ini</span>
+                <span class="metric-tag" id="progressBadge">—</span>
               </div>
-              <div class="metric-value" id="luxVal">9.120</div>
-              <div class="unit">lux · sensor BH1750</div>
-              <div class="trend">● Pembacaan sensor terkini</div>
-            </div>
-            <div class="metric">
-              <div class="metric-top">
-                PPFD estimasi <span class="metric-icon">✳</span>
-              </div>
-              <div class="metric-value" id="ppfdVal">169</div>
-              <div class="unit">µmol m⁻² s⁻¹</div>
-              <div class="trend">● Hasil konversi lux → PPFD</div>
-            </div>
-            <div class="metric">
-              <div class="metric-top">
-                DLI terkumpul <span class="metric-icon">◉</span>
-              </div>
-              <div class="metric-value" id="dliVal">6,2</div>
-              <div class="unit">mol m⁻² hari⁻¹</div>
-              <div class="trend" id="dliTrend">52% dari target harian</div>
-            </div>
-          </div>
-          <div class="grid-main">
-            <div class="panel">
-              <div class="panel-head">
-                <div>
-                  <h3>Intensitas cahaya sepanjang hari</h3>
-                  <div class="panel-desc">
-                    PPFD aktual dibandingkan dengan setpoint pengendali
-                  </div>
-                </div>
-                <div class="legend">
-                  <span><i class="swatch"></i>PPFD aktual</span
-                  ><span><i class="swatch dash"></i>Setpoint</span>
-                </div>
-              </div>
-              <div class="chart-wrap"><canvas id="ppfdChart"></canvas></div>
-              <div class="chart-foot">
-                <span>06.00</span><span>Waktu penyinaran</span
-                ><span>22.00</span>
-              </div>
-            </div>
-            <div class="panel progress-panel">
-              <div class="panel-head">
-                <div>
-                  <h3>Progress target DLI</h3>
-                  <div class="panel-desc">Akumulasi cahaya hari ini</div>
-                </div>
-                <span class="pill" id="progressBadge">Berjalan</span>
-              </div>
-              <div class="progress-big">
-                <strong id="progressPercent">52%</strong><span>tercapai</span>
+              <div class="metric-value">
+                <span id="dliVal">—</span><small>mol/m²</small>
               </div>
               <div class="progress-track">
-                <div class="progress-fill" id="progressFill"></div>
+                <span class="progress-fill"></span>
+              </div>
+              <div class="metric-foot">
+                <span id="dliTrend">—</span>
+                <span>dari target</span>
+              </div>
+            </article>
+
+            <article class="metric">
+              <div class="metric-top">
+                <span>Lux sensor</span>
+                <span class="metric-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                    <circle cx="12" cy="12" r="4" />
+                    <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+                  </svg>
+                </span>
+              </div>
+              <div class="metric-value">
+                <span id="luxVal">—</span><small>lux</small>
+              </div>
+              <div class="metric-foot">
+                <span>BH1750</span>
+                <span class="badge live">Live</span>
+              </div>
+            </article>
+
+            <article class="metric">
+              <div class="metric-top">
+                <span>Mol</span>
+                <span class="metric-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <circle cx="9" cy="9" r="4" />
+                    <circle cx="16.5" cy="15.5" r="3" />
+                  </svg>
+                </span>
+              </div>
+              <div class="metric-value">
+                <span id="molVal">—</span><small>mol</small>
+              </div>
+              <div class="metric-foot">
+                <span>Lux × 0.145</span>
+                <span class="badge live">Live</span>
+              </div>
+            </article>
+          </div>
+
+          <div class="grid-main">
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <h2>Cahaya hari ini</h2>
+                  <p class="panel-desc">Lux dari sensor BH1750</p>
+                </div>
+                <span class="badge live">Live</span>
+              </div>
+              <div class="chart-wrap lg"><canvas id="luxChart"></canvas></div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <h2>Target DLI</h2>
+                  <p class="panel-desc">Akumulasi cahaya hari ini</p>
+                </div>
+              </div>
+              <div class="progress-hero">
+                <strong id="progressPercent">—</strong>
+                <span>dari target</span>
+              </div>
+              <div class="progress-track">
+                <span class="progress-fill"></span>
               </div>
               <div class="progress-meta">
-                <span id="dliCurrent">6,2 mol</span
-                ><span id="dliTarget">Target 12 mol</span>
+                <span id="dliCurrent">—</span>
+                <span id="dliTarget">Target 12 mol</span>
               </div>
-              <div class="info-note" id="progressNote">
-                Masih diperlukan sekitar 5,8 mol m⁻² untuk mencapai target
-                harian.
-              </div>
-              <div class="status-row">
-                <div class="status-icon">☀</div>
-                <div>
-                  <strong>Lampu LED otomatis</strong
-                  ><small>Menyala saat sensor mendeteksi cahaya kurang</small>
-                </div>
-              </div>
-            </div>
+            </article>
           </div>
+
           <div class="grid-bottom">
-            <div class="panel">
+            <article class="panel">
               <div class="panel-head">
                 <div>
-                  <h3>Riwayat DLI · 7 hari</h3>
-                  <div class="panel-desc">
-                    Perbandingan DLI harian dengan target tanaman
-                  </div>
+                  <h2>7 hari terakhir</h2>
+                  <p class="panel-desc">DLI harian dibanding target</p>
                 </div>
-                <button
-                  class="btn secondary"
-                  onclick="window.location.href = 'riwayat-dli.html'"
-                >
-                  Lihat detail
-                </button>
+                <div class="panel-actions">
+                  <button class="btn secondary" id="exportOverviewCsv">
+                    Download CSV
+                  </button>
+                  <a class="badge" href="riwayat-dli.html">Lihat semua</a>
+                </div>
               </div>
-              <div class="week-chart"><canvas id="weekChart"></canvas></div>
-            </div>
-            <div class="panel">
+              <div class="chart-wrap"><canvas id="weekChart"></canvas></div>
+            </article>
+
+            <article class="panel">
               <div class="panel-head">
                 <div>
-                  <h3>Status & notifikasi</h3>
-                  <div class="panel-desc">
-                    Informasi kondisi sistem saat ini
-                  </div>
-                </div>
-                <span class="pill">Normal</span>
-              </div>
-              <div class="alert-list">
-                <div class="alert">
-                  <div class="alert-symbol ok">✓</div>
-                  <div>
-                    <strong>Sensor BH1750 aktif</strong>
-                    <p>Pembacaan intensitas cahaya diterima.</p>
-                  </div>
-                </div>
-                <div class="alert">
-                  <div class="alert-symbol ok">↗</div>
-                  <div>
-                    <strong>ESP32 terhubung</strong>
-                    <p>Data monitoring dikirim ke dashboard.</p>
-                  </div>
-                </div>
-                <div class="alert">
-                  <div class="alert-symbol">◷</div>
-                  <div>
-                    <strong>Target DLI sedang dikejar</strong>
-                    <p id="alertText">
-                      Sistem menyesuaikan lampu pada sisa waktu penyinaran.
-                    </p>
-                  </div>
+                  <h2>Status perangkat</h2>
+                  <p class="panel-desc">Sensor dan koneksi</p>
                 </div>
               </div>
-            </div>
-          </div>
-          <div class="footer-note">
-            * Tampilan menggunakan data simulasi untuk demonstrasi, bukan
-            pembacaan perangkat nyata.
+              <div class="status-list">
+                <div class="status-item">
+                  <span class="status-dot ok"></span>
+                  <div class="status-text">
+                    <strong>Sensor BH1750</strong>
+                    <small>Lux dan mol aktif</small>
+                  </div>
+                </div>
+                <div class="status-item">
+                  <span class="status-dot waiting" id="mqttDot"></span>
+                  <div class="status-text">
+                    <strong>Broker MQTT</strong>
+                    <small id="dataNote">Menunggu broker</small>
+                  </div>
+                </div>
+                <div class="status-item">
+                  <span class="status-dot waiting" id="iotDot"></span>
+                  <div class="status-text">
+                    <strong>Perangkat IoT</strong>
+                    <small id="iotState">Menunggu perangkat</small>
+                  </div>
+                </div>
+                <div class="status-item">
+                  <span class="status-dot" id="ledDot"></span>
+                  <div class="status-text">
+                    <strong>LED otomatis</strong>
+                    <small data-led>—</small>
+                  </div>
+                </div>
+              </div>
+            </article>
           </div>
         </section>
       </main>
     </div>
-    <div class="toast" id="toast">Pengaturan berhasil disimpan.</div>
+
+    <div class="toast" id="toast"></div>
+    <script src="https://cdn.jsdelivr.net/npm/mqtt@5/dist/mqtt.min.js"></script>
     <script src="js/app.js"></script>
   </body>
 </html>
