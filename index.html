@@ -1,265 +1,277 @@
 <!doctype html>
-<html lang="id">
+<html lang="id" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Overview | HydroLight</title>
+    <title>Automation Growth Light | HydroLight</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/app.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <script>
+      (function () {
+        var forced = new URLSearchParams(location.search).get("theme");
+        var theme = "dark";
+        try {
+          theme = localStorage.getItem("agl-theme") || "dark";
+        } catch (error) {
+          theme = "dark";
+        }
+        if (forced === "light" || forced === "dark") theme = forced;
+        document.documentElement.setAttribute("data-theme", theme);
+      })();
+    </script>
   </head>
   <body>
-    <div class="app">
-      <aside class="sidebar">
-        <a class="brand" href="index.html">
-          <span class="brand-text">
-            <strong>HydroLight</strong>
-            <small>Grow monitor</small>
-          </span>
-        </a>
-
-        <div class="nav-group">
-          <span class="nav-label">Menu</span>
-          <nav>
-            <a class="nav-btn active" href="index.html">
-              <span class="ico">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                  <rect x="3" y="3" width="7" height="7" rx="2" />
-                  <rect x="14" y="3" width="7" height="7" rx="2" />
-                  <rect x="3" y="14" width="7" height="7" rx="2" />
-                  <rect x="14" y="14" width="7" height="7" rx="2" />
-                </svg>
-              </span>
-              <span class="nav-text">Overview</span>
-            </a>
-            <a class="nav-btn" href="monitoring.html">
-              <span class="ico">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-                  <circle cx="12" cy="12" r="4" />
-                  <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
-                </svg>
-              </span>
-              <span class="nav-text">Monitoring</span>
-            </a>
-            <a class="nav-btn" href="riwayat-dli.html">
-              <span class="ico">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-                  <path d="M4 20V10M10 20V4M16 20v-6M22 20H2" />
-                </svg>
-              </span>
-              <span class="nav-text">Riwayat DLI</span>
-            </a>
-            <a class="nav-btn" href="pengaturan.html">
-              <span class="ico">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-                  <path d="M4 7h10M18 7h2M4 17h2M10 17h10" />
-                  <circle cx="16" cy="7" r="2.4" />
-                  <circle cx="8" cy="17" r="2.4" />
-                </svg>
-              </span>
-              <span class="nav-text">Pengaturan</span>
-            </a>
-          </nav>
+    <div class="page">
+      <header class="page-head">
+        <div class="head-left">
+          <h1 class="title">Automation Growth Light Monitoring</h1>
+          <div class="node-pill" id="nodePill">
+            <span class="node-dot is-waiting" id="nodeDot"></span>
+            <span>Sensor Node: <b id="nodeStatus">Menghubungkan…</b></span>
+            <span class="sep">•</span>
+            <span><b id="nodeLed">LED —</b></span>
+            <span class="node-mode" id="nodeMode">(Auto Vegetative)</span>
+          </div>
         </div>
-
-        <div class="device-card">
-          <div class="device-head">
-            <span>ESP32 · BH1750</span>
-            <span class="device-status" data-state="waiting">Menghubungkan</span>
-          </div>
-          <div class="device-readouts">
-            <div><span>Lux</span><strong id="cardLuxVal">—</strong></div>
-            <div><span>Mol</span><strong id="cardMolVal">—</strong></div>
-          </div>
-          <p class="device-connection"><span class="dot"></span>Menunggu broker</p>
+        <div class="theme-switch" role="group" aria-label="Pilih tema">
+          <button class="theme-btn" type="button" data-theme-btn="light">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+              <circle cx="12" cy="12" r="4" />
+              <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+            </svg>
+            Light
+          </button>
+          <button class="theme-btn" type="button" data-theme-btn="dark">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+              <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z" />
+            </svg>
+            Dark
+          </button>
         </div>
-      </aside>
+        <script>
+          document.querySelectorAll("[data-theme-btn]").forEach(function (btn) {
+            btn.classList.toggle(
+              "active",
+              btn.getAttribute("data-theme-btn") ===
+                document.documentElement.getAttribute("data-theme"),
+            );
+          });
+        </script>
+      </header>
 
-      <main>
-        <header class="topbar">
-          <div>
-            <span class="eyebrow">HydroLight</span>
-            <h1>Overview</h1>
-            <p class="sub">DLI, lux, dan mol hari ini.</p>
-          </div>
-          <div class="top-actions">
-            <div class="connection-pill" id="iotStatus" data-state="waiting">
-              <span class="connection-dot"></span>
-              <span class="connection-text">Menunggu IoT</span>
+      <main class="layout">
+        <article class="card accent-card dli-card">
+          <div class="dli-head">
+            <div>
+              <p class="card-eyebrow">Daily Light Integral</p>
+              <p class="card-caption">Akumulasi cahaya harian tanaman</p>
             </div>
-            <div class="date-pill">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                <circle cx="12" cy="12" r="9" />
-                <path d="M12 7v5l3 2" />
-              </svg>
-              <span class="clock">Memuat waktu…</span>
+            <span class="chip chip-lime" id="dliChip">—</span>
+          </div>
+          <div class="dli-body">
+            <div class="dli-donut">
+              <canvas id="dliDonut"></canvas>
+              <div class="dli-donut-center">
+                <strong id="dliValue">—</strong>
+                <span>/ 18.0 mol/m²/d</span>
+              </div>
             </div>
-            <button class="icon-btn refresh-btn" title="Perbarui tampilan">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round">
-                <path d="M20 11a8 8 0 1 0-2.3 5.7" />
-                <path d="M20 4v7h-7" />
-              </svg>
-            </button>
+            <div class="dli-foot">
+              <span id="dliRemaining">Sisa kebutuhan: —</span>
+              <span>06:00 – 22:00</span>
+            </div>
           </div>
-        </header>
+        </article>
 
-        <section class="page">
-          <div class="metrics-grid">
-            <article class="metric metric-dli">
-              <div class="metric-top">
-                <span>DLI hari ini</span>
-                <span class="metric-tag" id="progressBadge">—</span>
-              </div>
-              <div class="metric-value">
-                <span id="dliVal">—</span><small>mol/m²</small>
-              </div>
-              <div class="progress-track">
-                <span class="progress-fill"></span>
-              </div>
-              <div class="metric-foot">
-                <span id="dliTrend">—</span>
-                <span>dari target</span>
-              </div>
-            </article>
-
-            <article class="metric">
-              <div class="metric-top">
-                <span>Lux sensor</span>
-                <span class="metric-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-                    <circle cx="12" cy="12" r="4" />
-                    <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
-                  </svg>
-                </span>
-              </div>
-              <div class="metric-value">
-                <span id="luxVal">—</span><small>lux</small>
-              </div>
-              <div class="metric-foot">
-                <span>BH1750</span>
-                <span class="badge live">Live</span>
-              </div>
-            </article>
-
-            <article class="metric">
-              <div class="metric-top">
-                <span>Mol</span>
-                <span class="metric-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                    <circle cx="9" cy="9" r="4" />
-                    <circle cx="16.5" cy="15.5" r="3" />
-                  </svg>
-                </span>
-              </div>
-              <div class="metric-value">
-                <span id="molVal">—</span><small>mol</small>
-              </div>
-              <div class="metric-foot">
-                <span>Lux × 0.145</span>
-                <span class="badge live">Live</span>
-              </div>
-            </article>
-          </div>
-
-          <div class="grid-main">
-            <article class="panel">
-              <div class="panel-head">
-                <div>
-                  <h2>Cahaya hari ini</h2>
-                  <p class="panel-desc">Lux dari sensor BH1750</p>
-                </div>
-                <span class="badge live">Live</span>
-              </div>
-              <div class="chart-wrap lg"><canvas id="luxChart"></canvas></div>
-            </article>
-
-            <article class="panel">
-              <div class="panel-head">
-                <div>
-                  <h2>Target DLI</h2>
-                  <p class="panel-desc">Akumulasi cahaya hari ini</p>
-                </div>
-              </div>
-              <div class="progress-hero">
-                <strong id="progressPercent">—</strong>
-                <span>dari target</span>
-              </div>
-              <div class="progress-track">
-                <span class="progress-fill"></span>
-              </div>
-              <div class="progress-meta">
-                <span id="dliCurrent">—</span>
-                <span id="dliTarget">Target 12 mol</span>
-              </div>
-            </article>
-          </div>
-
-          <div class="grid-bottom">
-            <article class="panel">
-              <div class="panel-head">
-                <div>
-                  <h2>7 hari terakhir</h2>
-                  <p class="panel-desc">DLI harian dibanding target</p>
-                </div>
-                <div class="panel-actions">
-                  <button class="btn secondary" id="exportOverviewCsv">
-                    Download CSV
-                  </button>
-                  <a class="badge" href="riwayat-dli.html">Lihat semua</a>
-                </div>
-              </div>
-              <div class="chart-wrap"><canvas id="weekChart"></canvas></div>
-            </article>
-
-            <article class="panel">
-              <div class="panel-head">
-                <div>
-                  <h2>Status perangkat</h2>
-                  <p class="panel-desc">Sensor dan koneksi</p>
-                </div>
-              </div>
-              <div class="status-list">
-                <div class="status-item">
-                  <span class="status-dot ok"></span>
-                  <div class="status-text">
-                    <strong>Sensor BH1750</strong>
-                    <small>Lux dan mol aktif</small>
-                  </div>
-                </div>
-                <div class="status-item">
-                  <span class="status-dot waiting" id="mqttDot"></span>
-                  <div class="status-text">
-                    <strong>Broker MQTT</strong>
-                    <small id="dataNote">Menunggu broker</small>
-                  </div>
-                </div>
-                <div class="status-item">
-                  <span class="status-dot waiting" id="iotDot"></span>
-                  <div class="status-text">
-                    <strong>Perangkat IoT</strong>
-                    <small id="iotState">Menunggu perangkat</small>
-                  </div>
-                </div>
-                <div class="status-item">
-                  <span class="status-dot" id="ledDot"></span>
-                  <div class="status-text">
-                    <strong>LED otomatis</strong>
-                    <small data-led>—</small>
-                  </div>
-                </div>
-              </div>
-            </article>
-          </div>
-        </section>
+        <div class="stats">
+          <article class="card stat">
+            <div class="stat-head">
+              <span>Suhu</span>
+              <span class="chip" id="suhuChip">—</span>
+            </div>
+            <p class="stat-value"><span id="suhuValue">—</span><small>°C</small></p>
+          </article>
+          <article class="card stat">
+            <div class="stat-head">
+              <span>Kelembapan</span>
+              <span class="chip" id="humChip">—</span>
+            </div>
+            <p class="stat-value"><span id="humValue">—</span><small>%RH</small></p>
+          </article>
+          <article class="card stat">
+            <div class="stat-head">
+              <span>Lux</span>
+              <span class="chip" id="luxChip">—</span>
+            </div>
+            <p class="stat-value"><span id="luxValue">—</span><small>lx</small></p>
+          </article>
+          <article class="card stat">
+            <div class="stat-head">
+              <span>Mol / PPFD</span>
+              <span class="chip">PAR</span>
+            </div>
+            <p class="stat-value"><span id="molValue">—</span><small>µmol/m²/s</small></p>
+          </article>
+        </div>
       </main>
+
+      <section class="charts-row">
+        <article class="card chart-card dli-chart-card">
+          <div class="card-head chart-head">
+            <div class="chart-title">
+              <span class="chart-accent dli-accent" aria-hidden="true"></span>
+              <div>
+                <h2>Daily Light Intensity</h2>
+                <p>Akumulasi cahaya harian (7 hari terakhir)</p>
+              </div>
+            </div>
+            <span class="chip chip-lime">DLI</span>
+          </div>
+
+          <div class="chart-wrap dli-chart-wrap">
+            <canvas id="dliChart"></canvas>
+            <p class="chart-empty" id="dliChartEmpty">Menunggu data IoT…</p>
+          </div>
+        </article>
+
+        <article class="card chart-card">
+          <div class="card-head chart-head">
+            <div class="chart-title">
+              <span class="chart-accent" aria-hidden="true"></span>
+              <div>
+                <h2>Grafik Timeseries</h2>
+                <p>Tren telemetri sensor harian (Suhu, Lux &amp; Mol)</p>
+              </div>
+            </div>
+            <div class="tabs" id="chartTabs">
+              <button type="button" class="active" data-range="all">Semua</button>
+              <button type="button" data-range="suhu">Suhu</button>
+              <button type="button" data-range="mol">Mol / PPFD</button>
+            </div>
+          </div>
+
+          <div class="chart-tools">
+            <div class="chart-intervals">
+              <span class="interval-label">Interval</span>
+              <div class="tabs" id="intervalTabs">
+                <button type="button" class="active" data-interval="30">30 mnt</button>
+                <button type="button" data-interval="60">1 jam</button>
+              </div>
+            </div>
+
+            <div class="chart-legend">
+              <span class="legend-item ppfd" data-legend="ppfd"><i></i>PPFD / Mol (µmol/m²/s)</span>
+              <span class="legend-item suhu" data-legend="suhu"><i></i>Suhu (°C)</span>
+            </div>
+          </div>
+
+          <div class="chart-wrap">
+            <canvas id="timeseries"></canvas>
+            <p class="chart-empty" id="chartEmpty">Menunggu data IoT…</p>
+          </div>
+        </article>
+      </section>
+
+      <article class="card table-card">
+        <div class="card-head">
+          <div>
+            <h2>Data History Harian</h2>
+            <p>Pilih tanggal untuk meninjau telemetri sensor per jam (00:00 – 23:00)</p>
+          </div>
+          <label class="date-field">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+              <rect x="3" y="4.5" width="18" height="16" rx="3" />
+              <path d="M8 3v3M16 3v3M3 9.5h18" />
+            </svg>
+            <span class="date-text" data-date-text>17/11/2026</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+              <rect x="3" y="4.5" width="18" height="16" rx="3" />
+              <path d="M3 9.5h18M8 13.5h2M14 13.5h2M8 17h2" />
+            </svg>
+            <input type="date" data-date-input aria-label="Pilih tanggal riwayat" />
+          </label>
+        </div>
+
+        <div class="table-scroll">
+          <table class="telemetry">
+            <thead>
+              <tr>
+                <th>Waktu</th>
+                <th>Suhu (°C)</th>
+                <th>Kelembapan (%)</th>
+                <th>Lux (lx)</th>
+                <th>Mol / PPFD</th>
+                <th>Akumulasi DLI</th>
+                <th>Status Lampu</th>
+              </tr>
+            </thead>
+            <tbody id="historyRows"></tbody>
+          </table>
+        </div>
+      </article>
+
+      <article class="card export-card">
+        <div class="export-info">
+          <span class="export-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+              <path d="M12 3v11" />
+              <path d="M8 10.5 12 14.5l4-4" />
+              <path d="M5 17.5v1.5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-1.5" />
+            </svg>
+          </span>
+          <div>
+            <h2>Export Data Telemetry (.CSV)</h2>
+            <p>Unduh laporan rekaman sensor harian, bulanan, tahunan, atau rentang tanggal</p>
+          </div>
+        </div>
+
+        <div class="export-actions">
+          <div class="select-wrap">
+            <select id="exportRange" aria-label="Rentang export">
+              <option value="day">Per Hari</option>
+              <option value="month">Per Bulan</option>
+              <option value="year">Per Tahun</option>
+              <option value="range">Rentang Tanggal</option>
+            </select>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="m6 9 6 6 6-6" />
+            </svg>
+          </div>
+
+          <label class="date-field">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+              <rect x="3" y="4.5" width="18" height="16" rx="3" />
+              <path d="M8 3v3M16 3v3M3 9.5h18" />
+            </svg>
+            <span class="date-text" data-date-text>17/11/2026</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+              <rect x="3" y="4.5" width="18" height="16" rx="3" />
+              <path d="M3 9.5h18M8 13.5h2M14 13.5h2M8 17h2" />
+            </svg>
+            <input type="date" data-date-input aria-label="Tanggal export" />
+          </label>
+
+          <button class="btn-primary" id="downloadCsv" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+              <path d="M12 3v11" />
+              <path d="M8 10.5 12 14.5l4-4" />
+              <path d="M5 17.5v1.5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-1.5" />
+            </svg>
+            Download .CSV
+          </button>
+        </div>
+      </article>
     </div>
 
-    <div class="toast" id="toast"></div>
+    <div class="toast" id="toast" role="status"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mqtt@5/dist/mqtt.min.js"></script>
-    <script src="js/app.js"></script>
+    <script src="js/dashboard.js"></script>
   </body>
 </html>

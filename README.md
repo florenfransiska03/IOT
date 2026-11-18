@@ -1,92 +1,49 @@
 # HydroLight Dashboard
 
-Dashboard front-end untuk proposal Smart Hydroponic Lighting berbasis IoT. Dashboard subscribe ke broker MQTT melalui WebSocket dan memperbarui tampilan saat pesan masuk.
+Dashboard front-end untuk monitoring Smart Hydroponic Lighting. Tampilan dibuat ulang menjadi satu halaman bersih dengan tema terang/gelap, menggunakan font **Poppins** dan **Montserrat**.
 
 ## Struktur folder
 
-- `index.html` — Overview
-- `monitoring.html` — Monitoring Lux, Mol, dan DLI
-- `riwayat-dli.html` — Riwayat DLI 7 hari dan ekspor CSV
-- `pengaturan.html` — Profil tanaman, target DLI, dan informasi perangkat
-- `css/app.css` — Design system dan gaya bersama untuk semua halaman
-- `js/app.js` — Interaksi, visualisasi, perhitungan DLI, dan integrasi MQTT
+- `index.html` — halaman utama dashboard
+- `css/dashboard.css` — design system, tema terang/gelap, dan layout responsif
+- `js/dashboard.js` — grafik timeseries, kontrol fase/jadwal, tabel, dan ekspor CSV
+- `mqtt/broker.py` — broker MQTT lokal (opsional, untuk integrasi perangkat)
 
-Semua halaman memakai `css/app.css` agar tampilan konsisten. Font dimuat dari Google Fonts (Space Grotesk dan Inter).
-
-Library MQTT dimuat dari CDN:
+Font dimuat dari Google Fonts, sedangkan grafik memakai Chart.js dari CDN:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/mqtt@5/dist/mqtt.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 ```
-
-Jika dashboard harus berjalan offline, unduh file tersebut ke `js/mqtt.min.js` dan ubah tag script menjadi `<script src="js/mqtt.min.js"></script>`.
 
 ## Cara menjalankan
 
-1. Jalankan broker MQTT:
-
-   ```powershell
-   cd C:\Users\alfat\OneDrive\Desktop\platform-iot\mqtt
-   python broker.py
-   ```
-
-2. Jalankan web server statis:
+1. Jalankan web server statis:
 
    ```powershell
    cd C:\Users\alfat\OneDrive\Desktop\platform-iot\web
    python -m http.server 8081
    ```
 
-3. Buka `http://localhost:8081/index.html` di PC.
-4. Dari perangkat lain di jaringan yang sama, buka `http://192.168.1.6:8081/index.html`.
+2. Buka `http://localhost:8081/index.html` di browser.
+3. Dari perangkat lain di jaringan yang sama, buka `http://IP_PC:8081/index.html`.
 
-## Konfigurasi MQTT
-
-URL broker ditentukan dengan urutan:
-
-1. Query parameter `?mqtt=ws://IP_PC:9001`
-2. `localStorage` dengan key `hydrolight_mqtt_url`
-3. `ws://<hostname-halaman>:9001` jika halaman dibuka melalui HTTP
-4. `ws://localhost:9001` jika halaman dibuka melalui `file://`
-
-Contoh override dari console browser:
-
-```js
-localStorage.setItem("hydrolight_mqtt_url", "ws://192.168.1.6:9001");
-location.reload();
-```
-
-Atau buka:
+Untuk mengubah tema lewat URL:
 
 ```text
-http://localhost:8081/index.html?mqtt=ws://192.168.1.6:9001
+http://localhost:8081/index.html?theme=light
+http://localhost:8081/index.html?theme=dark
 ```
 
-Cek URL yang sedang dipakai:
+## Fitur
 
-```js
-window.hydrolightMqttUrl;
-```
-
-## Topic MQTT
-
-Dashboard subscribe ke `hydrolight/device/#`.
-
-| Topic | Efek di dashboard |
-|---|---|
-| `hydrolight/device/lux` | Mengisi nilai Lux dan grafik cahaya |
-| `hydrolight/device/mol` | Mengisi nilai Mol; jika topic Lux belum diterima, Lux dihitung mundur `mol / 0.145` |
-| `hydrolight/device/dli` | Menimpa nilai DLI dari perangkat |
-| `hydrolight/device/led` | Memperbarui status LED |
-| `hydrolight/device/status` | Memperbarui status koneksi perangkat IoT |
+- Toggle tema terang/gelap (tersimpan di `localStorage`).
+- Grafik timeseries dengan filter **Semua**, **Lux & Mol**, **DLI**, dan **Suhu**.
+- Kontrol fase pertumbuhan: Seedling, Vegetative, Flowering.
+- Mode **Auto** atau **Jadwal**; pada mode Jadwal, rentang waktu nyala lampu dapat diatur bebas.
+- Status lampu bersifat read-only dan mengikuti mode/jadwal yang dipilih.
+- Data history per jam serta ekspor CSV.
 
 ## Catatan
 
-- DLI dihitung di browser dari estimasi PPFD (`lux * 0.0185`) dan disimpan per hari di `localStorage` dengan key `hydrolight_dli_history`.
-- Nilai `mol` dari firmware memakai rumus `lux * 0.145`.
-- Status perangkat IoT dan status broker MQTT ditampilkan terpisah.
-- Broker menggunakan anonymous auth dan tanpa TLS; gunakan hanya di jaringan lokal tepercaya.
-
-## Catatan lampu
-
-Lampu LED dikendalikan secara otomatis oleh ESP32 berdasarkan pembacaan sensor cahaya BH1750, yaitu menyala ketika cahaya yang terdeteksi kurang. Dashboard ini hanya menampilkan data dan tidak mengirim perintah ke lampu.
+- Data telemetri pada halaman ini masih berupa data contoh untuk keperluan tampilan.
+- Status lampu ditampilkan otomatis: mode Auto dianggap menyala, mode Jadwal mengikuti rentang waktu yang diatur.
